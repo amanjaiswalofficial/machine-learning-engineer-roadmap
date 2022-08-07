@@ -257,7 +257,7 @@ Also critical in supervised learning when the labeling is done by multiple label
 "Feature engineering is a creative process where the analyst applies their imagination, intuition,  
 and domain expertise"
 
-FE for text data
+#### Feature Engineering for text data
 1. One Hot Encoding
 	Ex - Instead of using color's name in a column, use 1/0 model with 3 columns, assuming there are 3 different type of values for that field.
 	red      = [1, 0, 0]  
@@ -295,7 +295,7 @@ FE for text data
 	 - Working with *cyclical* categorical features, like days of week, where Sunday comes after Saturday again. Instead of using one-hot encoding, using something like **sine-cosine transformation** makes more sense. 
 
 
-**Feature Hashing**
+#### Feature Hashing
 
 A drawback while working with one-hot encoding and bag-of-words: having many unique values will create high-dimensional feature vectors.
 
@@ -311,15 +311,71 @@ h(word) mod 5   = 4
 And having the final vector like: [1, 1, 0, 2, 1] (Why?)
 
 
-**Topic Modelling**
+#### Topic Modelling
 
 "A family of techniques that uses unlabeled data, typically in the form of natural language text documents, where the model learns to represent a document as a vector of topics".
 
-Example - A newspaper, which can be represented by: “sports”, “politics,” “entertainment”,  “finance” and “technology” can have a feature vector as:
-[0.04, 0.5, 0.1, 0.3, 0.06] where politics (0.5) and finance (0.3) can have most weight.
+Example - A newspaper, which can be represented by: “sports”, “politics,” “entertainment”,  “finance” and “technology” can have a feature vector as: [0.04, 0.5, 0.1, 0.3, 0.06] where politics (0.5) and finance (0.3) can have most weight.
 
 Major algorithms: LSA and LDA
 
 
+#### Features for time-series
+
+Compared to other datasets, time-series data is usually orderedd by time.
+
+Instead of having multiple records for same time grain, its recommended to use something like count/average etc of those values to have only 1 record represent that time grain.
+
+Such data is used for purposes like:
+1. Predicting next observation
+2. Identifying the patterns in existing observations.
+
+
+Identifying Feature Engineering possibilites based on data analysis
+
+Examples:
+1. In receiving spam mails, if many of them are sent on Monday, then having a feature like: "sent-on-monday" in the data.
+2. In receiving spam mails, if many of them contain multiple emojis, then having a feature like: "no-of-smileys"
+And so on.
+
+
+#### Stacking features
+
+Example - for a problem "movie title classification in tweets", considering:
+a. Five words before title are the left context.
+b. Then there's the title.
+c. Five words after title are the right context.
+
+Stacking can be done by dealing with all 3 of above mentioned parts of the tweet and then combining them together in some order (can be a. b. and c., can be b. c. and a. and so on, only needs to ensure that all examples are combined in similar fashion).
+
+The approach:
+1. Take all left contexts from tweets
+	1. Apply bag-of-words to convert each left context into a feature vector.
+2. Take title/extractions:
+	1. Apply bag-of-words to convert each title into a feature vector.
+3. Take all right context from tweets
+	1. Apply bag-of-words to convert each right context into a feature vector.
+4. Combine all the feature vectors, similar to something like:
+	[0,1,0,0....]  [0,1,1,0....]  [1,1,0,0....]
+5. Ensure all follow the same order in combining
+
+
+Along with this, stacking individual features can also be done. In cases where high enough predictive power is required rather having it more time-efficient.
+
+Example - after having the feature-vector for a tweet with cinema, an additional feature can be to check whether: "the tweet has the topic as cinema or not". The feature can be from a classifier. If the topic predicted is cinema, then 1 else 0. Similarily, more features like:
+
+1. IMDB score
+2. Rotten tomatoes score etc
+
+Can be added along with original feature vectors
+
+
+#### Properties of good features
+1. High predictive power: Features that contribute directly to the lets say, prediction of something should be more focused than features which don't. Example - person's weight and health in predicting if he/she has cancer, and not his car type or car color.
+2. Fast computability: It should be possible to compute a feature fast. 
+3. Reliable
+4. Uncorelatedness
+5. Distribution of feature in training and production data should be as closely matched as possible.
+6. Should be unitary, as much as possible. Ex - length of car, weight of car, and not length divided by weight of car.
 
 
