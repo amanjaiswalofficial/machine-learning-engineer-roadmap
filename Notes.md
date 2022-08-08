@@ -2,6 +2,7 @@ Notes include lessons from:
 1. [Machine Learning Engineering](http://www.mlebook.com/wiki/doku.php) by [Andriy Burkov](https://www.linkedin.com/in/andriyburkov/ "https://www.linkedin.com/in/andriyburkov/")
 
 
+### Common terminologies
 
 #### Feature Engineering
 
@@ -55,7 +56,7 @@ A shallow learning algorithm learns the parameters of the model directly from th
 Neural network learning algorithms, specifically those that build neural networks with more than one layer between input and output. Such neural networks are called deep neural networks. In deep neural network learning. Most model parameters are learned not directly from the features of the training examples, but from the outputs of the preceding layers
 
 
-#### Machine Learning Project lifecycle
+### Machine Learning Project lifecycle
 ![[Pasted image 20220728092627.png]]
 
 ### Data Collection
@@ -251,7 +252,7 @@ Also critical in supervised learning when the labeling is done by multiple label
 "Data First Algorithm Second" or in other words, spend most of your effort and time on getting more data of wide variety and high quality, instead of trying to squeeze the maximum out of a learning algorithm.
 
 
-#### Feature Engineering (2)
+### Feature Engineering (2)
 
 "Machine learning algorithms can only apply to feature vectors"
 "Feature engineering is a creative process where the analyst applies their imagination, intuition,  
@@ -379,3 +380,148 @@ Can be added along with original feature vectors
 6. Should be unitary, as much as possible. Ex - length of car, weight of car, and not length divided by weight of car.
 
 
+#### Feature Selection
+"If we could estimate the importance of features, we would keep only the most important ones. That would allow us to save time, fit more examples in memory, and improve the model’s  
+quality"
+"Identifying which features directly impact the predictions as well as have enough values to impact the model training."
+
+Ways to identify such features:
+1. Cutting long tail: A feature which contains information, only for a handful of examples. A long tail of a distribution is such a part of that distribution that contains elements with substantially lower counts compared to a smaller group of elements with the highest counts.
+	1. For such a case, its important to identify the threshold for defining a feature as a long tail.
+	2. Can also use a hyperparameter for the problem to discover optimal value for this threshold.
+	3. Can consider distribution of counts as well, to identify the threshold.
+2. Boruta: Boruta iteratively trains random forest models and runs statistical tests to identify features as important and unimportant.
+3. L1 Regularization: L1 regularization produces a sparse model, which is a model that has most of its parameters equal to zero. Therefore, L1 implicitly performs feature selection by deciding  which features are essential for prediction, and which ones are not.
+4. Task specific feature selection: Example - To Remove some features from bag-of-words vectors representing natural language texts by excluding the dimensions corresponding to stop words, where stop words refer to words that are too generic for the problem we're trying to solve.
+
+
+#### Regularization
+"Regularization is an umbrella term for a range of techniques that improve the **generalization** of the model. Generalization, in turn, is the model’s ability to correctly predict the  
+label for unseen examples"
+
+
+#### Feature Synthesizing
+"Sometimes it may be useful to convert numerical features into categorical ones"
+
+
+#### Feature Discretization
+"If some feature selection technique applies only to categorical features."
+"discretization can add useful information to the learning algorithm when the training dataset is relatively small"
+
+#### Binning / Bucketing
+"Techniques to convert numerical feature into a categorical one by replacing numerical values in a specific range by a constant categorical value."
+
+**Types of Binning**
+
+1. Uniform Binning
+	All bins for a feature will usually have similar lengths. Also, once the model is deployed in production, if the value of the feature in the input feature vector is below or above the range of any bin, then the closest bin is assigned, which is either the leftmost or the rightmost bin.
+2. K-Means Binning
+	Values in each bin belong to the nearest one-dimensional k-means cluster.
+3. Quantile Based Binning
+	All bins have the same number of examples
+
+#### Synthesizing features from Relational Data
+
+"A typical approach is to compute various statistics from the data coming from multiple rows and use the value of each statistic as a feature."
+
+For example - calculating values like mean and standard deviation. on multiple row values for a certain property. 
+
+Why? If you want to increase the predictive power of your feature vectors, or when your training set is rather small, you can synthesize additional features that would help in predictions.
+
+#### Synthesizing features from data
+
+"Using algorithms like k-means clustering"
+
+
+#### Synthesizing features from other features
+
+"Using neural networks"
+
+In practice, the most common way to obtain new features from the existing features is to apply a simple transformation to one or a pair of existing features. Different type of transformations include:
+
+1. Discretization of the feature
+2. Squaring the feature
+3. Calculating mean and standard deviation of feature j from k-nearest neighbors.
+4. For pair of numerical features, simple arithmetic operators can be used as transformation.
+
+
+#### Learning features from data
+
+Technique include:
+
+1. Word Embeddings
+
+	"Word embeddings are feature vectors that represent words"
+	
+	"Word embeddings are learned from large corpora of text documents"
+	
+	Once you have a collection of word embeddings for some language, you can use them to represent individual words in sentences or documents written in that language, instead of using one-hot encoding.
+	
+	Some algorithms that can be used for this: word2vec, skip-gram, fastText
+
+2. Document Embeddings
+
+	Similar to a word, document embeddings can be generated and used as a feature.
+	
+	Some algorithm than can be used for this: doc2vec
+
+3. Embeddings of Anything
+
+	A general approach to train embeddings of any type:
+	
+	• What supervised learning problem to solve (for images, usually object classification),  
+	• How to represent the input for the neural network (for images, matrices of pixels, one  
+	per channel)
+	• What will be the architecture of the neural network before the fully connected layers  
+	(for images, usually a deep CNN)
+
+
+#### Dimensionality Reduction
+
+"Sometimes, it might be necessary to reduce the dimensionality of examples."
+
+"Often results in increased learning speed and better generalization"
+
+Dimensionality reduction vs Feature selection: we analyze the properties of all existing features and remove those that, in our opinion, do not contribute much to the quality of the model. When we apply a dimensionality reduction technique to a dataset, we 
+"replace all features in the original feature vector with a new vector, of lower dimensionality" 
+and of synthetic features.
+
+Some popular techniques:
+1. Principal Component Analysis (PCA)
+	a. The fastest
+	b. Drawback: all data must fit into memory for PCA to work
+	c. Variant: Incremental PCA,  which works with batches of data.
+	d. The algorithm produces D so-called principal components, where D is the dimensionality of data.
+
+	Usage: Using PCA as a step before model training to find the optimal value of the reduced dimensionality experimentally
+
+2. In case of Visualization, where the goal is to produce 2D or 3D feature vectors, we can use techniques like:
+	1. UMAP, which requires all data in memory
+	2. autoencoder, which can run in batch
+
+
+#### Scaling Features or feature scaling
+
+Refers to:
+"is bringing all your features to the same, or very similar, ranges of values or distributions"
+
+"Can also increase the training speed of deep neural networks"
+
+"Reduces the risk of numerical overflow"
+
+Techniques include:
+1. **Normalization**
+	"process of converting an actual range of values, which a numerical feature can take, into a predefined and artificial range of values, typically in the interval [-1, 1] or [0, 1]."
+
+	Possible drawback include: the min and max for calculating the range of values formula can be outliers. In which case, clipping can be used, which tries to choose the min and max to be values which aren't outliers.
+
+2. **Standardization**
+
+	"procedure during which the feature values are rescaled so that they have the properties of a standard normal distribution"
+
+
+When to use what?
+
+In theory, normalization would work better for uniformly distributed data, while standardization tends to work best for normally distributed data
+
+Feature scaling is usually beneficial to most learning algorithms.
