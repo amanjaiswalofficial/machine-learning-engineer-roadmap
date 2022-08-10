@@ -525,3 +525,84 @@ When to use what?
 In theory, normalization would work better for uniformly distributed data, while standardization tends to work best for normally distributed data
 
 Feature scaling is usually beneficial to most learning algorithms.
+
+
+
+#### Features - storage and documentation
+
+"It’s advised to design a schema file that provides a description of the features’ expected properties"
+
+**Schema File** is a document that describes features. It is updated each time some changes are made to features in name of versioning. It usually contains:
+i. name
+ii. its type
+iii. min and max values
+iv. sample mean and variance
+v. if zeroes are allowed
+vi. if undefined values are allowed
+vii. fraction of examples that can have this feature present (popularity)
+
+
+#### Feature Store
+A vault for storing documented, curated and access-controlled features within an organization. Each feature usually has:
+1. Name
+2. Description
+3. Metadata
+4. Definition
+
+
+#### Feature Engineering Best Practices
+1. Generate simple features in the beginning
+	"A feature is simple when it doesn’t take significant time to code"
+2. Reuse legacy systems
+	"When replacing an old, non-machine-learning-based algorithm with a statistical model, use the output of the old algorithm as a feature for the new model."
+3. Using IDs as features when needed, but reduce the cardinality when possible
+	"Example - Using country name instead of zip code if every zip space is not what's bein"
+	
+4. Other ways to reduce cardinality
+	Use feature hashing
+	Group similar values
+	Group long tail
+	Remove the feature if all or almost all values are unique
+	Verifying usage of count actually gives value as a feature
+	
+"Once the model is deployed in the production environment, and each time it is loaded, you must rerun feature extractor tests."
+
+"The feature extractor has to throw an exception and die if any resource (API or database that the feature consumes) during feature extraction is unavailable"
+
+"Avoid silent failures that may remain unnoticed for a long time with model performance degrading or becoming completely wrong."
+
+"The version of the feature extraction code must be in sync with the model’s version and the data used to build it. All 3 should be deployed and rolled back together"
+
+"Isolate Feature Extraction Code"
+
+"Log the feature values extracted in production for a random sample of online examples. When  
+you work on a new version of the model, these values will be useful to control the quality of the training data"
+
+
+### Model Training
+
+Points to consider before training the model:
+1. Validating schema conformity.
+	Ensure the schema in the data matches the schema file, previously created.
+2. Setting up basic performance levels.
+	Example - If input vector has high number of signals, we can expect near-zero errors.
+3. Choosing a single performance metric
+4. Choosing a right baseline
+	"A baseline is a model or an algorithm that provides a reference point for comparison. It gets an input, and outputs a prediction."
+5. Splitting data into 3 sets
+	i. Validation and test sets must come from same statistical distribution, and should have mostly similar properties.
+	ii. "Draw validation and test data from a distribution that looks much like the data you expect to observe once the model is deployed in production, which can be different from the distribution of the training data."
+6. Convert examples into numerical feature vectors.
+7. Engineer features and filled missed values using only the training data.
+
+
+#### Common baseline algorithms
+1. Random prediction algorithm
+	"makes a prediction by randomly choosing a label from the collection of labels assigned to the training examples."
+
+	For example - "In the regression problem it means selecting from all unique target values in the training data"
+2. Zero rule algorithm
+	zero rule algorithm strategy is to always predict the class most common in the training set, independently of the input value.
+
+
+#### Distribution Shift (to read)
