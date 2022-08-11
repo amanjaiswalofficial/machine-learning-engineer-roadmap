@@ -606,3 +606,129 @@ Points to consider before training the model:
 
 
 #### Distribution Shift (to read)
+
+
+#### Algorithm Spot Checking
+
+"Shortlisting candidate learning algorithms for a given problem"
+
+Points to consider:
+1. Select algorithms based on different principles, such as  
+	instance-based algorithms
+	kernel-based
+	shallow learning
+	deep learning
+	ensembles
+2. Trying each algorithm with 3 - 5 different values of the most sensitive hyperparameters
+3. If the learning algorithm is not deterministic (such as the learning algorithms for neural  networks and random forests), run several experiments, and then average the results;
+4. Use the same training/validation split for all experiments.
+
+#### Building a pipeline
+A sample pipeline can be:
+1. Tokenizaton
+2. Feature Extraction
+3. Feature Selection
+4. Feature Normalization
+5. Model Training
+
+"During the scoring, the input example passes through the entire pipeline and “becomes” an output"
+
+
+#### Performance Metrics (2)
+
+If model performs well on new/holdout data, we assume that it generalizes well. For this, a performance metric needs to be measured.
+
+For Regression:
+
+1. MSE / mean squared error
+2. MAE / mean absolute error
+3. ACPER / almost correct predictions error rate
+
+For Classification:
+
+1. Precision
+2. Accuracy
+3. Cost Sensitive Accuracy
+4. Area under ROC
+
+
+Before, Precision & Accuracy, must know Confusion Matrix
+
+
+#### Confusion Matrix
+||spam|not_spam|
+|---|---|---|
+|spam (actual)|23 (TP)| 1 (FN)|
+|not_spam (actual)| 12 (FP) | 556(TN)
+
+
+True Positive - Here 23 is what **were** **spam** and were **identified as spam**
+False Negtive - Here 1 is what **was spam** but **wasn't identified as spam**
+False Positive - Here 12 is what **were not spam** but **were identified as spam**
+True Negative - Here 556 is what **were not spam** and were **not identified as spam**
+
+#### Precision
+
+Ratio of TP with total number of P i.e. TP and FP
+TP / (TP+FP)
+
+#### Recall
+
+Ratio of TP with total number of actual positive examples i.e. TP and  FN
+TP / (TP+FN)
+
+Usually there's a precision-recall tradeoff, and have to settle for 1 depending on use-case.
+
+Many ways to do this
+Example - To increase precision (at the cost of a lower recall), we can decide that the prediction will be positive only if the score returned by the model is higher than 0.9.
+
+In case of **multiclass classification**, First select a class for which you want to assess these metrics. Then you consider all examples of the selected class as positives and all examples of the remaining classes as negatives.
+
+When comparing with other models or other performances of same model, **F-measure** or **F-score** can be used.
+
+
+#### Accuracy
+
+"the number of correctly classified examples, divided by the total number of classified examples"
+
+In case of classification:
+
+(TP+TN) / (TP+TN+FP+FN)
+
+
+#### Cost-sensitive accuracy
+
+Cases when different classes have different importance (i.e. TN and FP have different amount of relevance). Here:
+1. Assign a cost (a positive number) to both types of mistakes.
+2. Then after calculating values as usual, multiple values with their weights before calculating accuracy.
+
+In cases of imbalanced dataset, a better metric than normal or cost-sensitive accuracy is per-class accuracy.
+
+An overall better metric is **Cohen’s kappa statistic**
+
+Also read: **ROC Curve**
+
+
+Another metric for classification is
+#### ROC Curve or receiver operating characteristic Curve
+
+ - Uses TP rate and FP rate, to build summary picture of classicification performance.
+ - TP rate = TP/(TP+FN), FP rate = FP/(FP+TN)
+ - "The greater the area under the ROC curve (AUC), the better the classifier."
+ - Are relatively simple to understand.
+
+
+#### Hyperparameter Tuning
+ - Some hyperparameters influence the speed of training.
+ - Important hyperparameters control the two tradeoffs: bias-variance and precision-recall
+
+Some areas where hyperparameter tuning can be used:
+
+1. In data pre-processing, the hyperparameters could specify whether to use data-augmentation or using which technique to fill missing values.
+2. In feature engineering, a hyperparameter could define which feature selection technique to apply.
+3. When making predictions with a model that returns a score, a hyperparameter could specify the decision threshold for each class.
+
+Popular Hyperparamater Tuning Techniques
+
+### Grid Search
+
