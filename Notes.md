@@ -732,3 +732,124 @@ Popular Hyperparamater Tuning Techniques
 
 ### Grid Search
 
+- Used when the number of hyperparameters and their range is not too large.
+- For example - 
+```python
+pipe = Pipeline([('dim_reduction', PCA()), ('model_training', SVC())])
+param_grid = dict(dim_reduction__n_components=[2, 5, 10], model_training__C=[0.1, 10, 100])  
+grid_search = GridSearchCV(pipe, param_grid=param_grid)
+pipe.predict(new_example)
+```
+ - Step by step evaluation consists of:
+	 1. Configuring a pipeline with a pair of hyperparameter values,
+	 2. Applying the pipeline to the training data and training a model
+	 3. Computing the performance metric for the model on the validation data
+
+
+Another technique for this is
+
+#### Random Search
+
+Compared to Grid Search, here we don't provide set of values to explore for each hyperparamater.
+
+"Instead, you provide a statistical distribution for each hyperparameter from which values are randomly sampled"
+
+
+Combination of both techniques, results into another technique called
+
+#### Coarse-to-fine Search (to read)
+
+Also, important
+
+#### Bayesian Techniques (to read)
+
+
+#### Cross Validation
+ - preferred to use when the data set isn't too big
+ - steps to perform cross validation (For example - **five-fold cross validation**):
+	 0. Fix hyperparameter values to evaluate.
+	 1. Take the dataset.
+	 2. Split it into 5 folds.
+	 3. Train 5 models
+		 i. For first model, use F1 as test set, and F2, F3, F4 and F5 as training set.
+		 ii. For second model, use F2 as test set, and F1, F3, F4 and F5 as training set.
+		 iii. And so on.
+	 4. Average the five values of the metric to get the final value
+	 5. Can also combine grid or any other hyperparamater tuning technique
+	 6. Finally, assess the final model using the test set.
+
+
+#### Shallow Model Training Strategy
+1. Define a performance metric P.  
+2. Shortlist learning algorithms.  
+3. Choose a hyperparameter tuning strategy T.  
+4. Pick a learning algorithm A.  
+5. Pick a combination H of hyperparameter values for algorithm A using strategy T.  
+6. Use the training set and train a model M using algorithm A parametrized with  
+hyperparameter values H.  
+7. Use the validation set and calculate the value of metric P for model M.  
+8. Decide:  
+	a. If there are still untested hyperparameter values, pick another combination H of hyperparameter values using strategy T and go back to step 6.  
+	b. Otherwise, pick a different learning algorithm A and go back to step 5, or proceed to step 9 if there are no more learning algorithms to try.  
+9. Return the model for which the value of metric P is maximized.
+
+
+#### Saving and restoring the model
+Usually done by Pickle for serialization and deserialization of the trained model for storing, then restoring the m
+
+
+#### bias-variance (2) tradeoff
+
+The second type of tradeoff, the first one being precision-recall, while choosing the hyperparameters.
+
+Model having 
+#### high-bias / Underfitting
+
+A model performs well if it has low bias.
+
+Vice-versa, when the model makes too many mistakes on training data only, its said to have underfitted.
+
+**Reasons**
+ - the model is too simple for the data (for example linear models often underfit);  
+ - the features are not informative enough;  
+ - too much regularization
+
+**Solutions**
+ - trying a more complex model,  
+ - engineering features with higher predictive power,  
+ - adding more training data, when possible, and  
+ - reducing regularization
+
+
+Model having
+#### high variance / Overfitting
+
+The model that overfits usually predicts the training data labels very well, but works poorly on the holdout data.
+
+**Reasons**
+ - The model is too complex for the data. Very tall decision trees or a very deep neural  
+network often overfit;  
+ - there are too many features and few training examples; and  
+ - not enough regularization
+
+**Solutions**
+ - using simpler model
+ - adding regularization.
+ - reducign dimensionality or training with more data.
+
+
+To deal with variance and bias, and choosing optimal values for hyperparameters. An approach is
+#### Regularization (2)
+
+"To create a regularized model, we modify the objective function"
+
+"Regularization adds a penalizing term whose value is higher when the model is more complex"
+
+#### L1 Regularization & L2 Regularization
+
+Also called Lasso & Ridge Regularization
+
+
+Other regularization techniques involve:
+#### Elastic Net Regularization
+
