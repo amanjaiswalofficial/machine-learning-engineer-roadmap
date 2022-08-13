@@ -663,8 +663,11 @@ Before, Precision & Accuracy, must know Confusion Matrix
 
 
 True Positive - Here 23 is what **were** **spam** and were **identified as spam**
+
 False Negtive - Here 1 is what **was spam** but **wasn't identified as spam**
+
 False Positive - Here 12 is what **were not spam** but **were identified as spam**
+
 True Negative - Here 556 is what **were not spam** and were **not identified as spam**
 
 #### Precision
@@ -730,7 +733,7 @@ Some areas where hyperparameter tuning can be used:
 
 Popular Hyperparamater Tuning Techniques
 
-### Grid Search
+#### Grid Search
 
 - Used when the number of hyperparameters and their range is not too large.
 - For example - 
@@ -853,3 +856,97 @@ Also called Lasso & Ridge Regularization
 Other regularization techniques involve:
 #### Elastic Net Regularization
 
+
+#### Deep Learning Model Training Strategy
+
+1. Define a performance metric P.  
+	
+	"define a metric that would allow comparing the performance of two models on the holdout data. Ex - F-score or Cohen’s kappa."
+2. Define the cost function C.  
+	
+	"what our learning algorithm will optimize in order to train a model. Ex - for regression model, cost function is the mean squared error. For classification, categorical cross-entropy (for multiclass classification) or binary cross-entropy (for binary and multi-label classification)."
+3. Pick a parameter-initialization strategy W.  
+	
+	"Before the training starts, the parameter values in all units are unknown. We must initialize them with some values. For neural networks, can consider algorithms like gradient descent to figure out these values."
+
+	Can be strategies like:
+	i. ones
+	ii. zeros
+	iii. random normal etc
+4. Pick a cost function optimization algorithm A.  
+
+	Mostly use: gradient descent and stochastic gradient descent. 
+
+	Other ways to use Regularization in the process, is to use neural network-specific  
+	regularizers:
+	i. dropout
+	ii. early stopping
+	iii. batch normalization
+5. Choose a hyperparameter tuning strategy T.  
+6. Pick a combination H of hyperparameter values using the tuning strategy T.  
+	
+7. Train model M, using algorithm A, parametrized with hyperparameters H, to optimize  
+cost function C.  
+8. If there are still untested hyperparameter values, pick another combination H of  
+hyperparameter values using strategy T, and repeat step 7.  
+9. Return the model for which the metric P was optimized
+
+
+Flowchart of creating and using models via neural networks:
+![[Pasted image 20220813144012.png]]
+
+"you start with some model, and then increase its size until it fits the training  
+data well. If needed, we retrain the model"
+
+If required to increase size of model, due to bad performance. One can:
+1. Increase the size of individual layers
+2. Add another layer
+
+If after all 8 steps, the performance of the best model is still  
+not satisfactory, try a different network architecture, add more labeled data, or try **transfer  
+learning**
+
+
+#### Gradient Descent (3) (to read)
+
+#### Stochastic Gradient Descent (2) (to read)
+
+#### Local and Global Minimum (2) (w.r.t cost function)
+
+#### Learning rate decay 
+1. Time based
+2. Step based
+3. Exponential
+
+#### Dropout
+"Each time you “run” a training example through the network, you temporarily exclude random some units."
+
+"The dropout hyperparameter varies in the range [0, 1] and characterizes the fraction of units to randomly exclude from computation."
+
+Most effective
+
+#### Early Stopping
+"trains a neural network by saving the preliminary model after every epoch. Models saved after each epoch are called checkpoints"
+
+"By keeping a version of the model after each epoch, you can stop the training once you start observing a decreased performance on the validation set"
+
+#### Batch Normalization / Batch Standardization
+"standardizing the outputs of each layer before the next layer receives them as input"
+
+#### Handling multiple input and multiple output
+
+Bit difficult to do for shallow models.
+In case of neural networks, one can have several sub-networks, based on input types.
+For Example - In case of having an image and a text as an input, a CNN can read the image and the RNN can read the text. Both can have an embedding as their last layer.
+
+Similarily for multiple outputs...
+
+
+#### Transfer Learning
+"using a pre-trained model to build a new model."
+"The parameters learned by the pre-trained models can be useful for your task."
+
+a pretrained model can be used in the following ways:
+
+1. learned parameters can be used to initialize your own model
+2. can be used as a feature extractor for your model
