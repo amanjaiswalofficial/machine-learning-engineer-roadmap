@@ -950,3 +950,184 @@ a pretrained model can be used in the following ways:
 
 1. learned parameters can be used to initialize your own model
 2. can be used as a feature extractor for your model
+
+
+#### Stacking models
+
+"Ensemble learning is training an ensemble model, which is a combination of several base models, each individually performing worse than the ensemble model"
+
+Types:
+
+Algorithms like Random Forest Learning and Gradient Boosting, which train 100s-1000s of weak models to get 1 strong model. This works because when several uncorrelated models agree, they are more likely to agree on the correct outcome. 
+
+For this the models need to be uncorrelated, i.e. should be obtained by different feature/have different nature.
+
+Ex - 
+1. Combination of SVM and Random Forest
+
+How to combine such models for stacking:
+
+1. Averaging
+	"applying all your base models to the input x, and then averaging the predictions"
+2. Majority Vote
+	"applying all your base models to the input x, and then returning the majority class among all predictions."
+
+	"In the case of a tie, you can either randomly pick one of the classes, or return an error message if misclassifying would incur a significant loss for the business"
+3. Model Stacking
+	"an ensemble learning method that trains a strong model by inputting the outputs of other strong models"	
+
+	"If some of your base models return a class plus a class score, you can use those scores as  additional input features for the stacked model."
+
+**Dealing with possible data leakage in Model stacking**
+
+1. Follow a process similar to cross-validation, i.e. first, split all training data into ten or more blocks. The more blocks the better, but the process of training the model will be slower.
+2. Temporarily exclude one block from the training data, and train the base models on the  remaining blocks. 
+3. Then apply the base models to the examples in the excluded block. Obtain the predictions, and build the synthetic training examples for the excluded block by using the predictions from the base models.  
+4. Repeat the same process for each of the remaining blocks, and you will end up with the training set for the stacking model. The new synthetic training set will be of the same size as that of the original training set.
+
+
+#### Distribution Shift (2)
+
+"When the distributions of the training data and test data are not the same, we call it distribution shift"
+
+Different types:
+
+1. Covariate Shift
+	"shift in the values of features" 
+2. Prior Probability Shift
+	"shift in the values of the target"
+3. Concept Drift
+	"shift in the relationship between the features and the label"
+
+
+An approach to deal with problems which have large number of training examples, and few test examples can be:
+#### Adversarial Validation
+
+
+#### Imbalanced Data (2) (in learning)
+
+Similar to previous section, some of the ways to deal with imbalanced data while learning are:
+
+1. Class Weighting
+	Some algorithms allow providing weights for each class. By providing greater weight to the minority class, it becomes harder for the learning algorithm, to disregard examples of the minority class, because it would result in much higher cost than without class weighting.
+2. Ensembling of resampled data
+	Transform imbalanced binary learning problem by chunking the examples of the majority class into four subsets, while copying the minority class equal number of times with each chunk from majority class
+
+
+#### Model Calibration
+
+Several reasons for poor model behavior
+
+In case of underfitting, i.e, performing poor on training data
+
+1. the model architecture or learning algorithm are not expressive enough
+	"choose advanced algorithms"
+2. too much regularization
+	"reduce regularization"
+3. suboptimal values for hyperparameters
+	"tune hyperparameters"
+4. engineered features don’t have enough predictive power
+	"add informative features"
+5. don’t have enough data for the model to generalize
+	"try getting more data, using data augmentation or transfer learning"
+
+In case of overfitting, i.e. performing poor on test/holdout data
+
+1. don’t have enough data for generalization
+	"add more data or use data augmentation"
+2. model is under-regularized
+	"add regularization"
+3. training data distribution is different from the holdout data distribution
+	"reduce distribution shift"
+4. suboptimal values for hyperparameters
+	"tune hyperparameters"
+5. features have low predictive power
+	"add informative features"
+
+
+#### Tips on Error Analysis
+
+Techniques to fix an existing error pattern in model predictions
+ - preprocessing the input (e.g. image background removal, text spelling correction);  
+ - data augmentation (e.g., blurring or cropping of images);  
+ - labeling more training examples; and  
+ - engineering new features that would allow the learning algorithm to distinguish between  “hard” cases.
+
+In a system made up of multiple models, working together to give a final output of, lets say, 73% accuracy, it can be decided which model to focus on to improve the overall results. Accordingly the techniques mentioned above can be put to use.
+
+
+In case of deep learning, below approach can be used:
+![[Pasted image 20220814112604.png]]
+
+
+#### Best Practices
+
+1. 
+2. 
+3. Avoid correction cascades
+
+
+### Model Evaluation
+Some reasons to perform model evalution once its deployed to production:
+1. Study properties of distribution of prod. data compared to training data, to detect distribution shift, and accordingly retrain the model.
+2. Evaluate performance of the model. 
+3. Monitoring the performance of the model, "It is important to be able to detect this and, either upgrade the model by adding new data, or train an entirely different model".
+
+#### Offline Evaluation and Online Evaluation
+"An offline model evaluation happens when the model is being trained by the  
+analyst"
+
+"The offline model evaluation reflects how well  the analyst succeeded in finding the right features, learning algorithm, model, and values of hyperparameters. In other words, the offline model evaluation reflects how good the model is from an engineering standpoint."
+
+"Online evaluation, on the other hand, focuses on measuring business outcomes, such as  
+customer satisfaction, average online time, open rate, and click-through rate. Such information may not be reflected in historical data."
+
+
+Some popular types of online model evalutation include:
+1. A/B Testing
+
+
+#### A/B Testing
+2 different versions of a model, usually one being old and one being new are deployed and served to different groups of users at the same time.
+
+So, for models mA and mB two groups A and B will exist such that, group A traffic is routed to the old model (mA), while group B traffic is routed to the new model (mB).
+
+By comparing the performance of the two models, a decision is made about whether the new  
+model performs better than the old model. The performance is compared using **statistical  
+hypothesis testing**.
+
+#### Statistical Hypothesis Testing
+In short, it states 2 hypothesis:
+1. Null Hypothesis, that the new model doesn’t change the average value of the business metric.
+2. Alternative Hypothesis, that the new model changes the average value of the metric
+
+A/B Testing has several types of tests, with each type of test asking different type of questions:
+#### G-Test
+ - For metric that counts the answer to a “yes” or “no” question.
+ - Example: "Whether the user bought the recommended article, Whether the user has spent more than $50 during a month"
+ - Follows chi-square distribution, meaning if mA and mB were equal, we expect G to be small.
+ - p-value: the probability of observing more than a specific amount of G, which is generally expected to be small, under null hypothesis. (Ex - 5% or 0.05). 
+ - Impact of having low or high p-value? (to read)
+ - Also possible to test more than two models (e.g. models A, B, and C) and more than two possible answers to the question that define our metric (e.g., “yes,” “no,” “maybe”).
+
+#### Z-Test
+ - when the question for each user is, “How many?” or, “How much?”.
+ - Example: "How much time a user has spent on the website during a session, How much money a user has spent during a month"
+ - Calculated value Z denotes that the larger Z, the more likely the difference between A and B is significant.
+ - If the p-value is above or equal to 0.05, then we do not reject the null hypothesis
+
+
+One drawback A/B testing suffers is that in order to reach conclusion, the number of times a user went through one of the model is very high, i.e. A lot of users going through a worse model to find a better model. 
+
+"A significant portion of users routed to a suboptimal model would experience suboptimal behavior for a long time."
+
+Other than A/B testing, another technique is:
+
+#### Multi Armed Bandit
+In probability, for MAB, "a fixed and limited set of resources must be allocated between competing choices in a way that maximizes the expected reward. Each choice’s properties are only partially known at the time of allocation, and may become better understood as time passes and we allocate resources to the choice."
+
+"UCB1 (for Upper Confidence Bound) is a popular algorithm for solving the multi-armed  
+bandit problem. The algorithm dynamically chooses an arm, based on the performance of that  
+arm in the past, and how much the algorithm knows about it"
+
+
