@@ -1131,3 +1131,28 @@ bandit problem. The algorithm dynamically chooses an arm, based on the performan
 arm in the past, and how much the algorithm knows about it"
 
 
+#### Evaluating model performance: Statistical Bounds
+
+For Example - A 95% statistical interval indicates that there’s a 95% chance  
+the parameter you’re estimating is between the intervals bounds.
+
+In case of classifications, If the error ratio “err” for a classification model. Then, with probability 99%, “err” lies in the interval [err - δ, err + δ]
+
+
+#### Bootstrapping Statistical Interval (to read)
+
+
+#### Evaluating Test Set Adequacy (to read)
+
+
+#### Evalutation of model properties
+Other than accuracy and/or AUC, some other aspects of model's output to look at in terms of evaluating a model's performance:
+1. Robustness
+	"If the input example is perturbed by adding random noise, the performance of the model would degrade proportionally to the level of noise."
+
+	"If you have several models that perform similarly according to the performance metric, you  would prefer to deploy in production a model that is δ-robust, when applied to the test data,  with the smallest δ"
+2. Fairness
+	"Equal opportunity means each group gets a positive prediction from the model at equal  rates, assuming that people in this group qualify for it."
+
+	"The attributes that are sensitive and need protection from unfairness are called protected or sensitive attributes, like age, skin color, gender, religion"
+
