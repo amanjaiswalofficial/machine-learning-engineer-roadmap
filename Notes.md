@@ -1156,3 +1156,67 @@ Other than accuracy and/or AUC, some other aspects of model's output to look at 
 
 	"The attributes that are sensitive and need protection from unfairness are called protected or sensitive attributes, like age, skin color, gender, religion"
 
+
+### Model Deployment
+1. To deploy it in a system so that users can send queries to it
+2. These queries are then converted into feature vectors, then sent to model for scoring.
+3. The output is then sent to the user.
+
+
+Some of deployment patterns include:
+1. Statically
+	The model is packaged as a resource available at runtime. 
+	
+2. Dynamically on user device
+	Can be done by following ways:
+		a. Deploying model parameters
+		b. Deploying serialized objects
+		c. Deploying to the browser
+
+3. Dynamically on server
+	"place the model on a server and make it available as a REST API"
+
+	Can be done as
+		a. on a virtual machine
+		b. in a container
+		c. serverless deployment
+
+4. Model streaming
+
+	"are generally packaged as an application based on a stream-processing library (SPL), such as Apache Samza, Apache Kafka Streams."
+
+	"In each stream-processing application, there is an implicit or explicit notion of data processing topology. The input data flows in as an infinite stream of data elements sent by the client. Following a predefined topology, each data element in the stream undergoes a transformation in the nodes of the topology. Transformed, the flow continues to other nodes"
+
+	"In a stream-processing application, nodes transform their input in some way, and then either, send the output to other nodes, send the output to the client, or persist the output to the database or a filesystem"
+
+![[Pasted image 20220821192746.png]]
+
+
+Deployment types can be any of the following:
+1. Single Deployment
+	"Once you have a new model, you serialize it into a file, and then replace the old file with the new one"
+
+	Risk: If the new model or the feature extractor contains a bug, all users will be affected.
+2. Silent Deployment
+	"Deploy the new model version and new feature extractor, and keeps the old ones. Both versions run in parallel". 
+	
+	But the user will not be exposed to the new version until the switch is done. This means, that output from new deployment will be logged and analysed first before identifying the model as good enough to make the switch."
+
+	Drawback: need to run twice as many models, which consumes more resources.
+3. Canary Deployment
+4. Multi Armed Bandit (2)
+	"after the convergence of the MAB algorithm, most of the time, all users are routed to the  software version running the best model."
+
+	"Hence MAB can be used for 2 things - online model evaluation and model deployment — simultaneously"
+
+
+#### Canary Deployment
+
+It pushes the model and makes it available for a small number of users, while having all other users interacting with the older one. 
+
+Different to silent deployment, it allows validating performance as well as the effects of its predictions.
+
+Different to single deployment, doesn't affect lot of users in case of bugs
+
+Drawback: "impossible for engineers to spot rare errors. Ex - If you deploy the new version to 5% of users, and a bug affects 2% of users, then you have only 0.1% chance that the bug will be discovered"
+
