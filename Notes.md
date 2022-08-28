@@ -1066,6 +1066,11 @@ In case of deep learning, below approach can be used:
 2. 
 3. Avoid correction cascades
 
+#### Technique - Ridge Regression
+In comparison to Linear Regression, where there's no way to control the complexity, hence no way to control the bias-variance tradeoff, Ridge Regression has a parameter alpha which can be used to achieve this.
+
+Sometimes, to find out such hyperparameters, GridSearch or any other cross-validation technique can be used
+
 
 ### Model Evaluation
 Some reasons to perform model evalution once its deployed to production:
