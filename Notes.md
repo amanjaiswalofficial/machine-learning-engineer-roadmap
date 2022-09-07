@@ -59,6 +59,11 @@ Neural network learning algorithms, specifically those that build neural network
 ### Machine Learning Project lifecycle
 ![[Pasted image 20220728092627.png]]
 
+#### Process of model selection
+1. Split the data into training, validation and testing.
+2. Using multiple models (with multiple parameter values), we first train them on training data, then test them on validation data.
+3. After comparing between several models based on their performance on validation data, we choose the best model and run it on test data.
+
 ### Data Collection
 
 #### How much data
