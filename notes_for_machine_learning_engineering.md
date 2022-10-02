@@ -1,5 +1,5 @@
 Notes include lessons from:
-1. [Machine Learning Engineering](http://www.mlebook.com/wiki/doku.php) by [Andriy Burkov](https://www.linkedin.com/in/andriyburkov/ "https://www.linkedin.com/in/andriyburkov/")
+[Machine Learning Engineering](http://www.mlebook.com/wiki/doku.php) by [Andriy Burkov](https://www.linkedin.com/in/andriyburkov/ "https://www.linkedin.com/in/andriyburkov/")
 
 
 ### Common terminologies
