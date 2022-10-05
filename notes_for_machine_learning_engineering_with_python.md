@@ -80,3 +80,76 @@ over time
 
 General drift capture would look something like:
 ![plot](./images/drift.detection.with.training.png)
+
+##### Working with categorical features
+
+###### Ordinal Encoding
+When the output of encoding is [1,2,3] for *Cereal, Toilet Roll and Bleach*.
+But, they are not the the exact alternatives for each other. So this kind of introduces some bias in between the values, like, These numbers seem to suggest that cereal is to bleach as toilet roll is to cereal, and that the average of toilet roll and bleach is cereal.
+
+```python
+from sklearn import preprocessing
+ordinal_enc = preprocessing.OrdinalEncoder()
+ordinal_enc.fit(data)
+# Print returns [[0.]
+# [1.]
+# [2.]]
+print(ordinal_enc.transform(data)
+```
+
+###### One hot encoding
+On the other hand, the appropriate way to encode *Cereal, Toilet Roll and Bleach*, is to use one-hot encoding which looks something like this:  
+
+```python
+onehot_enc = preprocessing.OneHotEncoder()
+onehot_enc.fit(data)
+# Print returns [[1. 0. 0.]
+# [0. 1. 0.]
+# [0. 0. 1.]]
+print(onehot_enc.transform(data).toarray())
+```
+Here,
+ - There's no enforced ordering
+ - Every feature is orthogonal to others, so no average 
+
+##### Working with numerical data
+
+Requires values to be on a similar scale.
+Some techniques to achieve this:
+ - Standardization
+ - Min max normalization
+ - Feature vector normalization
+
+##### Defining learning
+
+Learning includes updating the parameteers and reduce the wrongness, which is captured using loss functions.
+
+Examples of loss functions:
+ - For regression
+   - Mean squared error / L2 loss
+   - Mean absolute error / L1 loss
+ - For classification (binary)
+   - Log/cross entropy loss
+   - Hinge loss
+ - And so on..
+
+##### Reducing loss / improving learning rate
+
+Examples of constant learning rate approaches
+ - Gradient Descent
+ - Batch Gradient Descent
+ - Stochastic Gradient Descent
+ - Mini-batch Gradient Descent
+
+Also read, adaptive learning rate methods.
+
+#### Hierarchy of automation in model optimization
+
+![plot](images/Hierarchy.of.ML.model.optimization.automation.png)
+
+#### Optimizing Hyperparameters
+
+Popular libraries to do this:
+ - Hyperopt
+ - Optuna
+
