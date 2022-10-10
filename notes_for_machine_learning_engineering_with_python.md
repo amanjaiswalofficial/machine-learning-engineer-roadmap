@@ -153,3 +153,89 @@ Popular libraries to do this:
  - Hyperopt
  - Optuna
 
+
+#### Persisting models using MLFlow (model registry)
+
+Setting up the backend
+
+```shell
+mlflow server \
+--backend-store-uri sqlite:///mlflow.db \
+--default-artifact-root ./artifacts \
+--host 0.0.0.0
+```
+
+Logging metrics and parameters from models trained
+
+```python
+with mlflow.start_run(run_name="YOUR_RUN_NAME") as run:
+  params = {
+    'tol': 1e-2,
+    'solver': 'sag'
+  }
+
+  std_scale_clf = make_pipeline(StandardScaler(), RidgeClassifier(**params))
+  std_scale_clf.fit(X_train, y_train)
+
+  y_pred_std_scale = std_scale_clf.predict(X_test)
+
+  mlflow.log_metrics({
+      'accuracy': metrics.accuracy_score(y_test, y_pred_std_scale),
+      'precision': metrics.precision_score(y_test, y_pred_std_scale, average='macro'),
+      'f1': metrics.f1_score(y_test, y_pred_std_scale, average='macro'),
+      'recall': metrics.recall_score(y_test, y_pred_std_scale, average='macro')
+  })
+  mlflow.log_params(params)
+
+  mlflow.sklearn.log_model(
+    sk_model=std_scale_clf,
+    artifact_path="sklearn-model",
+    registered_model_name="sk-learn-std-scaleclf"
+  )
+```
+
+Using the same model later
+
+```python
+model_name = "sk-learn-std-scale-clf"
+model_version = 1
+model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{model_version}"
+model.predict(X_test)
+```
+
+
+
+
+#### Model factory with pipelines
+
+*Using scikit-learn*
+
+```python
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+
+numeric_features = ['age', 'balance']
+numeric_transformer = Pipeline(
+  steps=[
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler', StandardScaler())
+])
+
+categorical_features = ['job', 'marital', 'education','contact', 'housing', 'loan', 'default','day']
+categorical_transformer = OneHotEncoder(handle_unknown='ignore')
+
+preprocessor = ColumnTransformer(
+  transformers=[
+    ('num', numeric_transformer, numeric_features),
+    ('cat', categorical_transformer, categorical_features)
+])
+
+clf_pipeline = Pipeline(
+  steps=[
+    ('preprocessor',preprocessor), 
+    ('classifier', LogisticRegression())
+])
+clf_pipeline.fit(X_train, y_train)
+```
+
