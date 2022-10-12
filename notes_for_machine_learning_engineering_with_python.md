@@ -238,4 +238,3 @@ clf_pipeline = Pipeline(
 ])
 clf_pipeline.fit(X_train, y_train)
 ```
-
