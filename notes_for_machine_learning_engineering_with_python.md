@@ -238,3 +238,11 @@ clf_pipeline = Pipeline(
 ])
 clf_pipeline.fit(X_train, y_train)
 ```
+
+#### Spark Best Practices
+
+ - Try not to join big tables on the left with small tables on the right (and vice versa) as this is inefficient
+ - Avoid query syntax that will scan full datasets if they are very large; for example, select max(date_time_value)
+ - Avoid data skew
+ - Avoid data shuffling
+ - Avoid actions in large datasets
