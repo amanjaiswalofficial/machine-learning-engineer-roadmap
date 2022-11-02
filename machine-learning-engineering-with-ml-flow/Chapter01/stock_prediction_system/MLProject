@@ -1,0 +1,6 @@
+name: stock_prediction_system
+docker_env:
+  image: stockpred-docker
+entry_points:
+  main:
+    command: "python main.py"
