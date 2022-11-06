@@ -1,8 +1,0 @@
-name: stockpred
-
-docker_env:
-  image:  stockpred
-
-entry_points:
-  main:
-    command: "python train.py"
