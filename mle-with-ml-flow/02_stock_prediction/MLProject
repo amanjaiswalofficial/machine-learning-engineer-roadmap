@@ -1,0 +1,5 @@
+name: stock_prediction_02
+python_env: python_env.yaml
+entry_points:
+  main:
+    command: "python main.py"
