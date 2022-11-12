@@ -22,3 +22,9 @@
 4. Deployment
 5. Data Mgmt
 6. Model Mgmt
+
+##### Building Data Science workbench
+1. Docker
+2. Jupyterlab
+3. MLflow
+4. PostgreSQL
