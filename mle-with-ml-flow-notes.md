@@ -28,3 +28,14 @@
 2. Jupyterlab
 3. MLflow
 4. PostgreSQL
+
+##### Components to manage models
+1. Models
+ - This module manages the format, library, and standards enforcement module on the platform. It supports a variety of the most used machine learning models: sklearn, XGBoost, TensorFlow, H20, fastai, and others. It has features to manage output and input schemas of models and to facilitate deployment.
+2. Model Registry
+ - This module handles a model life cycle, from registering and
+tagging model metadata so it can be retrieved by relevant systems.
+
+A MLflow model is bit like a Dockerfile for a model,
+where you describe metadata of the model, and deployment tools upstream are able to
+interact with the model based on the specification
