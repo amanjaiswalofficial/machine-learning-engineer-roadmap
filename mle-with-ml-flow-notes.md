@@ -39,3 +39,8 @@ tagging model metadata so it can be retrieved by relevant systems.
 A MLflow model is bit like a Dockerfile for a model,
 where you describe metadata of the model, and deployment tools upstream are able to
 interact with the model based on the specification
+
+##### Model flavors
+1. mlflow.tensorflow
+2. mlflow.h20
+3. mlflow.spark
