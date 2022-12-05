@@ -7,3 +7,4 @@
 ##### Books
 [Machine Learning Engineering with Python](https://www.packtpub.com/product/machine-learning-engineering-with-python/9781801079259)
 [Machine Learning Design Patterns](https://www.oreilly.com/library/view/machine-learning-design/9781098115777/)
+[Introduction to Machine Learning with Python](https://www.oreilly.com/library/view/introduction-to-machine/9781449369880/)
