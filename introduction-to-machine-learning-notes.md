@@ -33,3 +33,20 @@ the larger variety of data points your data‐set contains, the more complex a m
  - Parameters, Alpha
 
 ##### Lasso Regression
+ - Similar to Ridge, except it uses R1 regularization.
+ - Here, some cofficients are exactly zero, so, causing some features to be ignored entirely by model.
+ - Parameters, Alpha and max_iter
+
+#### Linear Models for classification
+##### Logistic Regression
+ - Uses L2 by default.
+ - Parameter, penalty, to decide what regularization to use
+ - Parameter, C. The lower the value of C, the more algorithm will try to adjust to majority of data points and vicecersa.
+##### Linear Support Vector Machines
+ - Parameter, C. The lower the value of C, the more algorithm will try to adjust to majority of data points and vicecersa.
+
+#### Linear models for multiclass classification
+ - Common technique, one-vs.-rest approach. Here a binary model for each class vs all other classes is learned. While prediction, all binary classifiers run on point and one with highest score is preferred as result.
+
+#####
+- 
