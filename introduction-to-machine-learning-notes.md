@@ -47,3 +47,4 @@ the larger variety of data points your data‐set contains, the more complex a m
 
 #### Linear models for multiclass classification
  - Common technique, one-vs.-rest approach. Here a binary model for each class vs all other classes is learned. While prediction, all binary classifiers run on point and one with highest score is preferred as result.
+
