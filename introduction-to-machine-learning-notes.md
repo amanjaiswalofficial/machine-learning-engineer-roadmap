@@ -48,3 +48,33 @@ the larger variety of data points your data‐set contains, the more complex a m
 #### Linear models for multiclass classification
  - Common technique, one-vs.-rest approach. Here a binary model for each class vs all other classes is learned. While prediction, all binary classifiers run on point and one with highest score is preferred as result.
 
+##### Strengths, Weakness, Parameters
+ - Parameter, Alpha in regression models andc in linearSVC/logistic regression.
+ - Parameter, whether to use L1 Regularization or L2 Regularization
+
+#### Naive Bayes Classifiers
+ - Faster than linear models
+ - More generalized models than linear clasifiers, hence not as good performance.
+ - Fast as they learn parameters by looking at each feature individually and collect simple per-class statistics from each feature.
+ - Types like GaussianNB, BernoulliNB, MultinomialNB
+ - Are great baseline models
+  
+ - Parameter, for Multi & Bernoully, take alpha for model complexity
+
+
+#### Decision Trees
+ - Learn a hierarchy of if/else question
+ - Learning a decision tree means learning the sequence of if/else questions that gets us to the true answer most quickly.
+ - Splitting the data based on tests (whether a point/value belongs to left [less than] or right [more than]  of something)
+ - Example: X[1] <= 0.5 will draw a line, with let's say 32 points left [below the line] and 48 points right [above the line].
+ - The process is repeated to keep drawing more such lines.
+ - The recursive partitioning of the data is repeated until each region in the partition (each leaf in the decision tree) only contains a single target value.
+
+#### Decision Tree for Regression
+ - To make a prediction, we traverse the tree based on the tests in each node and find the leaf the new data point falls into.
+
+ - Common to have overfitting. To prevent, meaning to stop the creation of tree early [called pre-pruning].
+ - Another approach to prevent overfitting, is to build the tree then remove nodes that contain little information [called post-pruning].
+ - Parameter, to control pre-pruning, is max_depth, to limit depth of tree. Other parameter for such concept include max_leaf_nodes and min_samples_leaf.
+ - 
+ - Feature Importance, summary to understand working of tree instead of looking at tree to its full depth.
