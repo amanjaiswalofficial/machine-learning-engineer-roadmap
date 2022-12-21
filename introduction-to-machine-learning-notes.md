@@ -78,3 +78,4 @@ the larger variety of data points your data‐set contains, the more complex a m
  - Parameter, to control pre-pruning, is max_depth, to limit depth of tree. Other parameter for such concept include max_leaf_nodes and min_samples_leaf.
  - 
  - Feature Importance, summary to understand working of tree instead of looking at tree to its full depth.
+
