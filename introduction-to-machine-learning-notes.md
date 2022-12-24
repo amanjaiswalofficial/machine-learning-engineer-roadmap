@@ -72,10 +72,28 @@ the larger variety of data points your data‐set contains, the more complex a m
 
 #### Decision Tree for Regression
  - To make a prediction, we traverse the tree based on the tests in each node and find the leaf the new data point falls into.
-
  - Common to have overfitting. To prevent, meaning to stop the creation of tree early [called pre-pruning].
  - Another approach to prevent overfitting, is to build the tree then remove nodes that contain little information [called post-pruning].
  - Parameter, to control pre-pruning, is max_depth, to limit depth of tree. Other parameter for such concept include max_leaf_nodes and min_samples_leaf.
- - 
  - Feature Importance, summary to understand working of tree instead of looking at tree to its full depth.
 
+#### Ensemble of decision trees: Random Forests
+ - To overcome the drawback faced by single decision trees, i.e., overfitting.
+ - To build many decision trees, and by injecting randomness in each of them to ensure they are different.
+ - This is achieved by selecting the data points for built trees randomly, or by selecting the features in each split test.
+ - For regression use-cases, averaging the results is considered, whereas for classification, soft voting strategy is used.
+ - Parameter, n_jobs, to set no. of cores to be used
+ - Parameter, max_depth
+ - Paramet, max_features, the less the lesser the overfitting and vice-versa. Rule of thumb, sqrt(no of features)
+ - Random forest can't perform well on high dimension data. Require more memory, slow to train.
+
+#### Ensemble of decision trees: Gradient Boosted Trees
+ - Compared to Random forests, this works by building trees in a serial man‐
+ner, where each tree tries to correct the mistakes of the previous one.
+ - Instead of randomization, by default, it uses pre-pruning to reduce overfitting.
+ - Faster in terms of making predictions.
+ - The main idea is to combine as many weak learners/simple models to iteratively improve performance.
+ - Parameters include no. of trees (n_estimators) and pre-pruning and learning rate, which controls how strongly each tree will try to fix mistakes made by previous one.
+ - Mostly used, XGBoost for this
+ - Parameter, max_depth, to reduce complexity of each tree.
+ - Ways to decrease complexity, include applying stronger pre-pruning or limiting maximum depth.
