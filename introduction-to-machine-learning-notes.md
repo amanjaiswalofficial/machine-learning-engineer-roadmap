@@ -96,4 +96,5 @@ ner, where each tree tries to correct the mistakes of the previous one.
  - Parameters include no. of trees (n_estimators) and pre-pruning and learning rate, which controls how strongly each tree will try to fix mistakes made by previous one.
  - Mostly used, XGBoost for this
  - Parameter, max_depth, to reduce complexity of each tree.
- - Ways to decrease complexity, include applying stronger pre-pruning or limiting maximum depth.
+ - Way to decrease complexity, include applying stronger pre-pruning or limiting maximum depth.
+
