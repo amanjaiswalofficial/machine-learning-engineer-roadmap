@@ -97,4 +97,3 @@ ner, where each tree tries to correct the mistakes of the previous one.
  - Mostly used, XGBoost for this
  - Parameter, max_depth, to reduce complexity of each tree.
  - Way to decrease complexity, include applying stronger pre-pruning or limiting maximum depth.
-
