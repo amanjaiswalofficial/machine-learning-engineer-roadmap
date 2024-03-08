@@ -7,6 +7,7 @@
 6. SVM
 
 
+
 """
 the larger variety of data points your data‐set contains, the more complex a model you can use without overfitting.
 """
